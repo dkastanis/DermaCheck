@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+<div class="dashboard-grid">
+    <header>
+        <div class="header-left">
+            <h1>DermaCheck</h1>
+            <p class="user-name">{{ session['user']['firstname'] }} {{ session['user']['lastname'] }}</p>
+        </div>
+        <div class="header-right">
+            <a href="/user/signout" class="btn btn--secondary">Sign Out</a>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <div class="accordion" id="lesionAccordion">
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1"
+                        aria-expanded="false" aria-controls="collapse1">
+                        Benign keratosis
+                    </button>
+                </h2>
+                <div id="collapse1" class="accordion-collapse collapse" aria-labelledby="heading1" data-bs-parent="#lesionAccordion">
+                    <div class="accordion-body">
+                        Seborrheic keratosis (SK), lichen planus-like keratosis (LPLK), and solar lentigo (SL) are common benign skin lesions. These lesions are frequently seen adjacent to each other or can arise from one another. They can sometimes be difficult to differentiate despite having distinct histopathological features. 
+                        They appear as waxy light tan, brown or black growths that look as if they were dripped onto the skin by a candle. Some can grow large, more than 1 inch (2.5 centimeters) across. Seborrheic keratoses are harmless and not contagious.
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2"
+                        aria-expanded="false" aria-controls="collapse2">
+                        Basal cell carcinoma
+                    </button>
+                </h2>
+                <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#lesionAccordion">
+                    <div class="accordion-body">
+                        Basal cell carcinoma is a type of skin cancer that most often develops on areas of skin exposed to the sun, such as the face. Most basal cell carcinomas grow slowly, do not spread in the bloodstream or lymph nodes, and are typically not a threat to life if they are not neglected. The cancer destroys tissue adjacent to it and may get larger and more destructive with time, which is why it is treated.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading3">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3"
+                        aria-expanded="false" aria-controls="collapse3">
+                        Actinic keratoses
+                    </button>
+                </h2>
+                <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#lesionAccordion">
+                    <div class="accordion-body">
+                        Actinic keratoses affect people that have often lived in the tropics or subtropics and have predisposing factors such as: Other signs of photoageing skin, Fair skin with a history of sunburn, History of long hours spent outdoors for work or recreation, Defective immune system. However, even in temperate climates they may be common - in southern Ireland and northwest England up to 25% of people aged 60 years and over have at least one.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading4">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4"
+                        aria-expanded="false" aria-controls="collapse4">
+                        Vascular lesions
+                    </button>
+                </h2>
+                <div id="collapse4" class="accordion-collapse collapse" aria-labelledby="heading4" data-bs-parent="#lesionAccordion">
+                    <div class="accordion-body">
+                        Vascular lesions are abnormal growths or malformations in the blood vessels, which can occur in various parts of the body. They can be congenital or acquired and may result from injury, infection, or other underlying medical conditions. Vascular lesions are relatively common abnormalities of the skin and underlying tissues, more commonly known as birthmarks. There are three major categories of vascular lesions: Hemangiomas, Vascular Malformations, and Pyogenic Granulomas
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading5">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5"
+                        aria-expanded="false" aria-controls="collapse5">
+                        Melanocytic nevi
+                    </button>
+                </h2>
+                <div id="collapse5" class="accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#lesionAccordion">
+                    <div class="accordion-body">
+                        Melanocytic nevus is the medical term for a mole. Nevi can appear anywhere on the body. They are benign (non-cancerous) and typically do not require treatment. A very small percentage of melanocytic nevi may develop a melanoma within them. They are fairly common and, in most cases, they do not cause health problems. However, they can carry risks. Most cases of CMN never require treatment, but there are some cases in which the moles may be removed. This is usually done to lower the risk of skin cancer or to improve appearance.
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading6">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6"
+                        aria-expanded="false" aria-controls="collapse6">
+                        Melanoma
+                    </button>
+                </h2>
+                <div id="collapse6" class="accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#lesionAccordion">
+                    <div class="accordion-body">
+                        Melanoma is a kind of skin cancer that starts in the melanocytes. Melanocytes are cells that make the pigment that gives skin its color, melanin. Melanoma typically starts on skin that's often exposed to the sun, including the skin on the arms, back, face, and legs.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading7">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7"
+                        aria-expanded="false" aria-controls="collapse7">
+                        Dermatofibroma
+                    </button>
+                </h2>
+                <div id="collapse7" class="accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#lesionAccordion">
+                    <div class="accordion-body">
+                        A dermatofibroma is a common overgrowth of the fibrous tissue situated in the dermis (the deeper of the two main layers of the skin). It is benign (harmless) and will not turn into a cancer. Whilst dermatofibromas are harmless, they can be similar in appearance to other concerning skin tumours.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </aside>
+
+
+
+    <main>
+        <div class="image-placeholder">
+            <p>Image Placeholder</p>
+        </div>
+        <div class="button-group">
+            <button>Load Image</button>
+            <button>Show Results</button>
+        </div>
+        <p class="description">
+            DermaCheck is a skin lesion classification application
+        </p>
+    </main>
+
+    <aside class="clinicians">
+        <h3>Clinicians in the Area</h3>
+        <ul>
+            <li>Clinician 1</li>
+            <li>Clinician 2</li>
+            <li>Clinician 3</li>
+            <li>Clinician 4</li>
+            <li>Clinician 5</li>
+        </ul>
+    </aside>
+
+    <footer>
+        <div>
+            <h4>Regulatory Compliance</h4>
+            <ul>
+                <li>GDPR</li>
+                <li>HIPAA</li>
+                <li>NMPA</li>
+            </ul>
+        </div>
+        <div>
+            <h4>Skin Lesion Literature Links</h4>
+            <ul>
+                <li><a href="https://www.skincancer.org/skin-cancer-information/" target="_blank" rel="noopener noreferrer">Skin Lesion Link 1</a></li>
+                <li><a href="https://www.who.int/news-room/questions-and-answers/item/radiation-ultraviolet-(uv)" target="_blank" rel="noopener noreferrer">Skin Lesion Link 2</a></li>
+                <li><a href="https://www.isic-archive.com/" target="_blank" rel="noopener noreferrer">Skin Lesion Link 3</a></li>
+            </ul>
+        </div>
+    </footer>
+</div>
+{% endblock %}

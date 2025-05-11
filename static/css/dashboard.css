@@ -1,0 +1,181 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f6f8;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-areas:
+        "header header header"
+        "sidebar main clinicians"
+        "footer footer footer";
+    grid-template-columns: 220px 1fr 220px;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    gap: 10px;
+    padding: 10px;
+}
+
+header {
+    grid-area: header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar, .clinicians, footer {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.sidebar {
+    grid-area: sidebar;
+}
+
+main {
+    grid-area: main;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.clinicians {
+    grid-area: clinicians;
+}
+
+footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 5px;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 200px;
+    border: 2px dashed #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.button-group {
+    margin-bottom: 15px;
+}
+
+button, .btn {
+    padding: 10px 15px;
+    margin-right: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover, .btn:hover {
+    background-color: #0056b3;
+}
+
+.description {
+    margin-bottom: 20px;
+}
+
+.user-info {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+}
+.header-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-left h1 {
+    margin: 0;
+}
+
+.header-left .user-name {
+    font-size: 14px;
+    color: #f0f0f0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-right .btn {
+    background-color: #ffffff;
+    color: #007bff;
+    padding: 6px 12px;
+}
+
+.header-right .btn:hover {
+    background-color: #f0f0f0;
+}
+/* Update header color */
+header {
+    background-color: #4A90E2;  /* мягкий синий */
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* User name styling under logo */
+.header-left .user-name {
+    font-size: 14px;
+    color: #f0f0f0;
+    margin-top: 4px;
+}
+
+/* Center the buttons */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.button-group button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button-group button:hover {
+    background-color: #0056b3;
+}
+.accordion-body {
+    font-size: 12px;
+}

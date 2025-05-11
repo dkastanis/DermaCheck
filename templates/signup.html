@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<div class="card-wrapper">
+    <div class="card">
+        <h1 class="center">Create an Account</h1>
+        <form name="signup_form" action="/user/signup" method="POST">
+            <label for="firstname">First Name</label>
+            <input type="text" name="firstname" class="field" required>
+
+            <label for="lastname">Last Name</label>
+            <input type="text" name="lastname" class="field" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" name="email" class="field" required>
+
+            <label for="password">Password</label>
+            <input type="password" name="password" class="field" required>
+
+            <input type="submit" value="Sign Up" class="btn">
+
+            <p class="error error--hidden"></p>
+        </form>
+
+        <p class="center">Already have an account? <a href="/login">Log In</a></p>
+    </div>
+</div>
+
+{% endblock %}
