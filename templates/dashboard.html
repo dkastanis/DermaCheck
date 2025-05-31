@@ -5,14 +5,18 @@
 
 <div class="dashboard-grid">
     <header>
-        <div class="header-left">
-            <h1>DermaCheck</h1>
-            <p class="user-name">{{ session['user']['firstname'] }} {{ session['user']['lastname'] }}</p>
+        <div class="header-left d-flex align-items-center">
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="DermaCheck Logo" style="height: 100px; margin-right: 5px;">
+            <div>
+                
+                <p class="user-name">{{ session['user']['firstname'] }} {{ session['user']['lastname'] }}</p>
+            </div>
         </div>
         <div class="header-right">
             <a href="/user/signout" class="btn btn--secondary">Sign Out</a>
         </div>
     </header>
+
 
     <aside class="sidebar">
         <div class="accordion" id="lesionAccordion">
@@ -125,28 +129,46 @@
 
 
     <main>
-        <div class="image-placeholder">
-            <p>Image Placeholder</p>
-        </div>
-        <div class="button-group">
-            <button>Load Image</button>
-            <button>Show Results</button>
-        </div>
-        <p class="description">
+        <div class="container d-flex flex-column align-items-center justify-content-center" style="min-height: 70vh; text-align: center;">
+            
+            <form id="upload-form" enctype="multipart/form-data" class="mb-3">
+                <input type="file" name="image" accept="image/*" required class="form-control mb-2">
+                <button type="submit" class="btn btn-primary">Load Image</button>
+            </form>
+
+            <div class="mb-3">
+                <img id="preview" src="" style="max-width: 300px; display: none;" class="img-thumbnail mb-2">
+                <br>
+                <button id="analyze-btn" class="btn btn-success" disabled>Show Results</button>
+            </div>
+
+            <!-- result -->
+            <div id="result" class="mt-3 fw-bold fs-5 text-info"></div>
+
+            <!--  PDF button-->
+            <button id="download-pdf-btn" class="btn btn-outline-dark mt-3" style="display: none;">Print Results</button>
+
+            <p class="description mt-4 text-muted">
             DermaCheck is a skin lesion classification application
-        </p>
+            </p>
+
+        </div>
     </main>
 
+
+
+
     <aside class="clinicians">
-        <h3>Clinicians in the Area</h3>
-        <ul>
-            <li>Clinician 1</li>
-            <li>Clinician 2</li>
-            <li>Clinician 3</li>
-            <li>Clinician 4</li>
-            <li>Clinician 5</li>
+        <h3>Nearby Dermatologists</h3>
+        <button id="find-nearby" class="btn btn-primary mb-2">Find Near Me</button>
+        <ul id="clinician-list">
+            <li>Click the button to get a list of nearby dermatologists!</li>
         </ul>
     </aside>
+
+
+
+
 
     <footer>
         <div>
