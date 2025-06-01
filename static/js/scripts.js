@@ -144,37 +144,40 @@ $("#download-pdf-btn").on("click", function () {
 document.getElementById('find-nearby').addEventListener('click', function() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            const location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            const map = new google.maps.Map(document.createElement('div'));  // no need to display map
-            const service = new google.maps.places.PlacesService(map);
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
 
-            const request = {
-                location: location,
-                radius: '5000',
-                keyword: 'dermatologist'
-            };
-
-            service.nearbySearch(request, function(results, status) {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
+            $.ajax({
+                url: "/user/find-nearby",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({ latitude: lat, longitude: lng }),
+                success: function(res) {
                     const list = document.getElementById('clinician-list');
                     list.innerHTML = '';
-                    const maxResults = 6;  // limit fot displaying results
-                    for (let i = 0; i < Math.min(results.length, maxResults); i++) {
-                        const place = results[i];
-                        const li = document.createElement('li');
-                        const link = document.createElement('a');
-                        link.href = `https://www.google.com/maps/place/?q=place_id:${place.place_id}`;
-                        link.target = '_blank';
-                        link.textContent = place.name + (place.vicinity ? ` (${place.vicinity})` : '');
-                        li.appendChild(link);
-                        list.appendChild(li);
-                    }
+                    const results = res.results || [];
+                    const maxResults = 6;
 
                     if (results.length === 0) {
                         list.innerHTML = '<li>No dermatologists found nearby.</li>';
+                    } else {
+                        for (let i = 0; i < Math.min(results.length, maxResults); i++) {
+                            const place = results[i];
+                            const li = document.createElement('li');
+                            const link = document.createElement('a');
+                            link.href = `https://www.google.com/maps/place/?q=place_id:${place.place_id}`;
+                            link.target = '_blank';
+                            link.textContent = place.name + (place.vicinity ? ` (${place.vicinity})` : '');
+                            li.appendChild(link);
+                            list.appendChild(li);
+                        }
                     }
+                },
+                error: function() {
+                    alert('Failed to retrieve nearby dermatologists.');
                 }
             });
+
         }, function() {
             alert('Geolocation failed.');
         });
@@ -182,3 +185,4 @@ document.getElementById('find-nearby').addEventListener('click', function() {
         alert('Geolocation is not supported by this browser.');
     }
 });
+

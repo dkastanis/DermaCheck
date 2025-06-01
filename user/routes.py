@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, send_file, jsonify
+from flask import Blueprint, render_template, request, send_file, jsonify, current_app 
 from user.models import User
 from datetime import datetime
 import os
@@ -9,6 +9,7 @@ from model.predict_skin_cancer import predict_skin_cancer
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
+import requests
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -46,7 +47,9 @@ def signout():
 
 @user_bp.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    google_maps_api_key = current_app.config['GOOGLE_MAPS_API_KEY']
+    return render_template('dashboard.html', google_maps_api_key=google_maps_api_key)
+
 
 @user_bp.route('/upload', methods=['POST'])
 def upload():
@@ -160,5 +163,27 @@ def download_pdf():
     return send_file(pdf_path, as_attachment=True)
 
 
+@user_bp.route('/find-nearby', methods=['POST'])
+def find_nearby():
+    data = request.get_json()
+    lat = data.get('latitude')
+    lng = data.get('longitude')
+
+    api_key = current_app.config['GOOGLE_MAPS_API_KEY']
+
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+    params = {
+        "location": f"{lat},{lng}",
+        "radius": 15000,
+        "keyword": "dermatologist",
+        "key": api_key
+    }
+
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+
+    print("Google API raw response:", response.json())
+
+    return jsonify(response.json())
 
 
