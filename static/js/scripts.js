@@ -51,27 +51,44 @@ $("input[name='email'], input[name='password']").on("input", function () {
 
 // IMAGE UPLOAD
 $("#upload-form").on("submit", function (e) {
-  e.preventDefault();
-  const formData = new FormData(this);
+    e.preventDefault();
 
-  $.ajax({
-    url: "/user/upload",
-    type: "POST",
-    data: formData,
-    processData: false,
-    contentType: false,
-    success: function (res) {
-      lastUploadedFile = res.filepath;
-      $("#preview").attr("src", res.filepath).show();
-      $("#analyze-btn").prop("disabled", false);
-      $("#result").text("");
-      $("#download-pdf-btn").hide();
-    },
-    error: function () {
-      alert("Upload failed.");
+    const fileInput = $("input[name='image']")[0];
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert("Please select a file.");
+        return;
     }
-  });
+
+    // Проверка MIME-типа
+    if (!file.type.startsWith("image/")) {
+        alert("Only image files are allowed.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    $.ajax({
+        url: "/user/upload",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            lastUploadedFile = res.filepath;
+            $("#preview").attr("src", res.filepath).show();
+            $("#analyze-btn").prop("disabled", false);
+            $("#result").text("");
+            $("#download-pdf-btn").hide();
+        },
+        error: function () {
+            alert("Upload failed.");
+        }
+    });
 });
+
 
 // PREDICTION
 $("#analyze-btn").on("click", function () {
@@ -156,21 +173,28 @@ document.getElementById('find-nearby').addEventListener('click', function() {
                     const list = document.getElementById('clinician-list');
                     list.innerHTML = '';
                     const results = res.results || [];
-                    const maxResults = 6;
+                    const maxResults = 5;
 
                     if (results.length === 0) {
                         list.innerHTML = '<li>No dermatologists found nearby.</li>';
                     } else {
                         for (let i = 0; i < Math.min(results.length, maxResults); i++) {
-                            const place = results[i];
-                            const li = document.createElement('li');
-                            const link = document.createElement('a');
-                            link.href = `https://www.google.com/maps/place/?q=place_id:${place.place_id}`;
-                            link.target = '_blank';
-                            link.textContent = place.name + (place.vicinity ? ` (${place.vicinity})` : '');
-                            li.appendChild(link);
-                            list.appendChild(li);
-                        }
+                          const place = results[i];
+
+                          const li = document.createElement('li');
+                          const link = document.createElement('a');
+                          link.href = `https://www.google.com/maps/place/?q=place_id:${place.place_id}`;
+                          link.target = '_blank';
+                          link.textContent = place.name + (place.vicinity ? ` (${place.vicinity})` : '');
+                          li.appendChild(link);
+
+                          const separator = document.createElement('li');
+                          separator.innerHTML = "<span style='color: #aaa;'>----------------------------</span>";
+
+                          list.appendChild(li);
+                          if (i < maxResults - 1) list.appendChild(separator);
+                      }
+
                     }
                 },
                 error: function() {

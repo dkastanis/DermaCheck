@@ -10,7 +10,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
 import requests
-
+from PIL import Image
 user_bp = Blueprint('user_bp', __name__)
 
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
@@ -51,6 +51,12 @@ def dashboard():
     return render_template('dashboard.html', google_maps_api_key=google_maps_api_key)
 
 
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
 @user_bp.route('/upload', methods=['POST'])
 def upload():
     if 'image' not in request.files:
@@ -60,13 +66,34 @@ def upload():
     if image.filename == '':
         return jsonify({'error': 'Empty file name'}), 400
 
+    # ✅ Optional: restrict to image extensions
+    if not allowed_file(image.filename):
+        return jsonify({'error': 'Only image files are allowed (png, jpg, jpeg, gif)'}), 400
+
     filename = secure_filename(image.filename)
     unique_name = f"{uuid.uuid4().hex}_{filename}"
     filepath = os.path.join(UPLOAD_FOLDER, unique_name)
-    image.save(filepath)
 
+    try:
+        # Try to open the uploaded file as an image
+        img = Image.open(image)
+        img.verify()  # Validate image integrity (raises error if corrupt or not an image)
+
+        # Reset the file pointer after verify() to allow saving
+        image.seek(0)
+        image.save(filepath)
+    except Exception:
+        # If image is unreadable or invalid, notify the user
+        return jsonify({'error': 'Image appears to be corrupted or unreadable. Please reupload.'}), 400
+
+    # Schedule image for auto-deletion after timeout
     delete_file_later(filepath)
+
+    # Return relative path to saved file
     return jsonify({"filepath": f"/static/uploads/{unique_name}"})
+
+
+
 
 @user_bp.route('/predict', methods=['POST'])
 def predict():
@@ -150,9 +177,9 @@ def download_pdf():
         y = height - 100  # start near top of next page
 
     # Normalize and print image path
-    print("Original image path:", image_path)
+    #print("Original image path:", image_path)
     image_path = os.path.abspath(image_path).replace("\\", "/")
-    print("Normalized image path:", image_path)
+    #print("Normalized image path:", image_path)
 
     try:
         c.drawImage(image_path, 100, y - img_height, width=img_width, height=img_height, preserveAspectRatio=True, mask='auto')
@@ -182,7 +209,7 @@ def find_nearby():
     response = requests.get(url, params=params)
     response.raise_for_status()
 
-    print("Google API raw response:", response.json())
+    #print("Google API raw response:", response.json())
 
     return jsonify(response.json())
 

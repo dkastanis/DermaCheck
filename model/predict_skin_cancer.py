@@ -28,6 +28,11 @@ def predict_skin_cancer(filepath):
                 "confidence": round(value, 2)
             })
 
+        # Check ONLY the top-1 prediction confidence
+        top1_confidence = predictions[0]["confidence"]
+        if top1_confidence < 95:
+            raise Exception("The uploaded image is likely not a valid skin lesion. Please upload a clearer medical image.")
+
         return predictions
 
     except Exception as e:
