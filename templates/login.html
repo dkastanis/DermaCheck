@@ -23,10 +23,13 @@
       <input type="password" name="password" class="field" required>
 
       <input type="submit" value="Log In" class="btn">
-
       <p class="error error--hidden"></p>
     </form>
+
     <p class="center" style="margin-top: 1em;">
+      Forgot your password? <a href="{{ url_for('user_bp.forgot_password') }}">Reset it here</a>
+    </p>
+    <p class="center">
       Don't have an account? <a href="{{ url_for('user_bp.signup_page') }}">Sign Up</a>
     </p>
   </div>

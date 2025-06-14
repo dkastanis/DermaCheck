@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, request, send_file, jsonify, current_app 
+from flask import Blueprint, render_template, request, send_file, jsonify, current_app, flash, redirect
 from user.models import User
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import uuid
 import threading
@@ -11,6 +11,11 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
 import requests
 from PIL import Image
+from passlib.hash import pbkdf2_sha256
+from db import db
+from user.models import send_email
+
+
 user_bp = Blueprint('user_bp', __name__)
 
 UPLOAD_FOLDER = os.path.join('static', 'uploads')
@@ -66,7 +71,7 @@ def upload():
     if image.filename == '':
         return jsonify({'error': 'Empty file name'}), 400
 
-    # ✅ Optional: restrict to image extensions
+    # Optional: restrict to image extensions
     if not allowed_file(image.filename):
         return jsonify({'error': 'Only image files are allowed (png, jpg, jpeg, gif)'}), 400
 
@@ -214,3 +219,59 @@ def find_nearby():
     return jsonify(response.json())
 
 
+@user_bp.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form.get('email').strip().lower()
+        user = db.users.find_one({"email": email})
+        if not user:
+            flash("User with this email does not exist.")
+            return redirect('/forgot-password')
+
+        # Generate token
+        token = str(uuid.uuid4())
+        db.password_reset_tokens.insert_one({
+            "email": email,
+            "token": token,
+            "expires_at": datetime.utcnow() + timedelta(hours=1)
+        })
+
+        reset_link = f"http://localhost:5000/user/reset-password/{token}"
+        subject = "Password Reset Request"
+        body_text = f"Click the following link to reset your password:\n\n{reset_link}"
+        body_html = f"""
+        <html>
+          <body>
+            <p>You requested a password reset.</p>
+            <p><a href="{reset_link}">Click here to reset your password</a></p>
+            <p>This link will expire in 1 hour.</p>
+          </body>
+        </html>
+        """
+
+        send_email(email, subject, body_text, body_html)
+        flash("Reset link sent to your email.")
+        return redirect('/login')
+
+    return render_template('forgot_password.html')
+
+@user_bp.route('/reset-password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    record = db.password_reset_tokens.find_one({"token": token})
+
+    if not record or record["expires_at"] < datetime.utcnow():
+        return "Reset link is invalid or has expired.", 400
+
+    if request.method == 'POST':
+        new_password = request.form.get('password')
+        if not new_password:
+            flash("Password is required.")
+            return render_template("reset_password.html", token=token)
+
+        hashed_password = pbkdf2_sha256.hash(new_password)
+        db.users.update_one({"email": record["email"]}, {"$set": {"password": hashed_password}})
+        db.password_reset_tokens.delete_one({"token": token})
+        flash("Password updated successfully.")
+        return redirect("/login")
+
+    return render_template("reset_password.html", token=token)
