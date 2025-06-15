@@ -2,7 +2,7 @@ from models.predict_skin_cancer import predict_skin_cancer, image_discriminator
 
 def main():
 
-    filepath = r"C:\Users\dimit\OneDrive\Desktop\Screenshot 2024-01-15 113845.png"
+    filepath = r"C:\Users\dimit\OneDrive\Desktop\02.png"
 
     print(image_discriminator(filepath))
 

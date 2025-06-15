@@ -4,7 +4,7 @@ import torch.nn as nn
 from torchvision import transforms, models
 from PIL import Image
 
-processor = AutoImageProcessor.from_pretrained("Anwarkh1/Skin_Cancer-Image_Classification")
+processor = AutoImageProcessor.from_pretrained("Anwarkh1/Skin_Cancer-Image_Classification", use_fast=True)
 model = AutoModelForImageClassification.from_pretrained("Anwarkh1/Skin_Cancer-Image_Classification")
 model.eval()
 
@@ -62,7 +62,8 @@ def image_discriminator(img_path):
         output = model(img_tensor)
         prob = torch.sigmoid(output).item()
         print(f"[INFO] Prediction probability: {prob:.4f}")
-        if prob > 0.9:
+        if prob > 0.95:
             print("Skin cancer present")
         else:
             print("No skin cancer detected")
+        return prob
