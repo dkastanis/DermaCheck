@@ -5,7 +5,7 @@ import os
 import uuid
 import threading
 from werkzeug.utils import secure_filename
-from model.predict_skin_cancer import predict_skin_cancer
+from models.skin_lesion_classifier import skin_lesion_classifier
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
@@ -111,7 +111,7 @@ def predict():
     full_path = os.path.join(os.getcwd(), filepath.strip("/"))
 
     try:
-        predictions = predict_skin_cancer(full_path)
+        predictions = skin_lesion_classifier(full_path)
         return jsonify({
             "predictions": predictions
         })
