@@ -63,7 +63,7 @@ def image_discriminator(img_path):
         prob = torch.sigmoid(output).item()
         print(f"[INFO] Prediction probability: {prob:.4f}")
         if prob > 0.95:
-            print("Skin cancer present")
+            print("Skin-like image")
         else:
-            print("No skin cancer detected")
+            print("No skin-like image")
         return prob
