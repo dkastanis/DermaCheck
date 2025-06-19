@@ -13,12 +13,12 @@ This is the code for the DermaCheck project part of the JKU Master Course: Engin
 * Instructions:
   - Download the code provided
   - Run the Python code on Visual Studio Code
-  - Register to the site with your credentials
-  - Log in to the site
-  - Load your image
-  - View the results
-  - Ín case of positive results, mind contacting any dermatologist in your area, which you can find in the list provided in the right sidebar
-  - Check details of skin lesions in the left sidebar
+  - On your browser, register to the DermaCheck app with your preferred credentials
+  - Log in to the DermaCheck app
+  - Load your image. If the image does not correspond to a skin lesion, you'll be notified and should repeat the process with a new image.
+  - View the results of the image classification.
+  - In case of positive results, you can use the finder of nearby dermatologists provided in the right sidebar, and please keep in mind contacting any preferred dermatologist in your area.
+  - Check details of skin lesions in the left sidebar to get informed about the different types.
 	
-  - Data Privacy Notice: The images you upload are processed locally on your machine and deleted after 10 minutes. Your account remains active for 30 days, after which it will be deleted. 
-  
+  - Data Privacy Notice: The images you upload are processed locally on your machine and deleted after 10 minutes.
+  - Data Ethics Notice: Image processing occurs locally to minimize privacy risks and adheres to ethical standards in data handling
