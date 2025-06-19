@@ -2,7 +2,7 @@
 This is the code for the DermaCheck project part of the JKU Master Course: Engineering of AI-Intensive Systems
 
 * Team Members:
-  - Dimitrios Kastanis, k01135457 (Master AI) & Bairam Kuliev (Master Computer Science)
+  - Dimitrios Kastanis, k01135457 (Master AI) & Bairam Kuliev k12438981(Master Computer Science)
 
 * DermaCheck's Trello Kanban Board:
   - https://trello.com/b/yESjt8E1/ai-intensive-systems
