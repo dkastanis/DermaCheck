@@ -16,6 +16,15 @@ from passlib.hash import pbkdf2_sha256
 from db import db
 from user.models import send_email
 
+LABEL_MAP = {
+    "vascular_lesions": "Vascular Lesion",
+    "melanocytic_Nevi": "Melanocytic Nevus",
+    "melanoma": "Melanoma",
+    "dermatofibroma": "Dermatofibroma",
+    "benign_keratosis-like_lesions": "Benign Keratosis-like Lesion",
+    "actinic_keratoses": "Actinic Keratosis",
+    "basal_cell_carcinoma": "Basal Cell Carcinoma"
+}
 
 user_bp = Blueprint('user_bp', __name__)
 
@@ -118,12 +127,19 @@ def predict():
 
         # STEP 2: Run full skin cancer prediction
         predictions = predict_skin_cancer(full_path)
+
+        # STEP 3: Map internal labels to human-readable labels
+        for pred in predictions:
+            original = pred["label"]
+            pred["label"] = LABEL_MAP.get(original, original)
+
         return jsonify({
             "predictions": predictions
         })
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 
 
