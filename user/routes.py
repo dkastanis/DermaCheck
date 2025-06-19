@@ -5,7 +5,8 @@ import os
 import uuid
 import threading
 from werkzeug.utils import secure_filename
-from models.predict_skin_cancer import predict_skin_cancer
+from models.skin_lesion_classifier import predict_skin_cancer
+from models.image_discriminator import image_discriminator
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
@@ -98,9 +99,6 @@ def upload():
     return jsonify({"filepath": f"/static/uploads/{unique_name}"})
 
 
-
-
-from models.predict_skin_cancer import predict_skin_cancer, image_discriminator  # обязательно импортируй
 
 @user_bp.route('/predict', methods=['POST'])
 def predict():
