@@ -27,21 +27,24 @@ def predict_skin_cancer(filepath):
         for p, idx in zip(top_probs[0], top_idx[0]):
             predicted_class_idx = idx.item()
             predicted_class_name = model.config.id2label[predicted_class_idx]
-            value = p.item() * 100  # convert to percentage
+            value = p.item() * 100  # convert to %
             predictions.append({
                 "label": predicted_class_name,
                 "confidence": round(value, 2)
             })
 
-        # Check ONLY the top-1 prediction confidence
+        # Assign top1 confidence
         top1_confidence = predictions[0]["confidence"]
-        if top1_confidence < 95:
+
+        # Basic validation: Reject if confidence is low
+        if top1_confidence < 90:
             raise Exception("The uploaded image is likely not a valid skin lesion. Please upload a clearer medical image.")
 
         return predictions
 
     except Exception as e:
         raise Exception(f"Prediction failed: {str(e)}")
+
 
 
 # Model loader for inference
@@ -62,7 +65,7 @@ def image_discriminator(img_path):
         output = model(img_tensor)
         prob = torch.sigmoid(output).item()
         print(f"[INFO] Prediction probability: {prob:.4f}")
-        if prob > 0.95:
+        if prob > 0.90:
             print("Skin-like image")
         else:
             print("No skin-like image")

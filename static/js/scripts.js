@@ -61,7 +61,6 @@ $("#upload-form").on("submit", function (e) {
         return;
     }
 
-    // Проверка MIME-типа
     if (!file.type.startsWith("image/")) {
         alert("Only image files are allowed.");
         return;
@@ -111,9 +110,11 @@ $("#analyze-btn").on("click", function () {
                 .data("predictions", res.predictions)
                 .show();
         },
-        error: function () {
-            $("#result").text("Prediction failed");
+        error: function (xhr) {
+            const msg = xhr.responseJSON?.error || "Prediction failed";
+            $("#result").html(`<span style="color: red;">${msg}</span>`);
         }
+
     });
 });
 

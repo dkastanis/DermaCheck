@@ -5,7 +5,7 @@ import os
 import uuid
 import threading
 from werkzeug.utils import secure_filename
-from model.predict_skin_cancer import predict_skin_cancer
+from models.predict_skin_cancer import predict_skin_cancer
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
@@ -100,6 +100,8 @@ def upload():
 
 
 
+from models.predict_skin_cancer import predict_skin_cancer, image_discriminator  # обязательно импортируй
+
 @user_bp.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
@@ -111,12 +113,20 @@ def predict():
     full_path = os.path.join(os.getcwd(), filepath.strip("/"))
 
     try:
+        # STEP 1: Check if image looks like skin
+        skin_prob = image_discriminator(full_path)
+        if skin_prob < 0.9:
+            return jsonify({"error": "Please upload a valid skin lesion photo."}), 400
+
+        # STEP 2: Run full skin cancer prediction
         predictions = predict_skin_cancer(full_path)
         return jsonify({
             "predictions": predictions
         })
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 
 @user_bp.route('/download-pdf', methods=['POST'])

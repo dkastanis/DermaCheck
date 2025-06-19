@@ -24,7 +24,6 @@ def send_email(to_email, subject, body_text, body_html=None):
     msg["From"] = from_email
     msg["To"] = to_email
 
-    # Plain version (на всякий случай)
     part1 = MIMEText(body_text, "plain")
 
     # HTML version
@@ -65,7 +64,7 @@ class User:
             return jsonify({"error": "Invalid email format"}), 400
 
         local_part, domain = email.split('@', 1)
-        allowed_domains = ['gmail.com', 'yahoo.com', 'outlook.com']
+        allowed_domains = ['gmail.com', 'yahoo.com', 'outlook.com', 'gmx.at']
 
         if domain not in allowed_domains:
             return jsonify({"error": "Email domain not allowed"}), 400
@@ -78,7 +77,7 @@ class User:
         if db.users.insert_one(user):
             self.start_session(user)
 
-            # ✉️ Send welcome email
+            # Send welcome email
             subject = "Welcome to DermaCheck!"
 
             body_text = f"""
