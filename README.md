@@ -10,6 +10,9 @@ This is the code for the DermaCheck project part of the JKU Master Course: Engin
 * DermaCheck's Google Drive:
   - https://drive.google.com/drive/u/0/folders/1PN-3vUuwfj5GnrrVzFxT6J14B0MQ8uT7?ths=true
 
+* DermaCheck's Presentation Video URL:
+  - https://drive.google.com/file/d/1H2u3XTjCwxfe3WJTKkYvpD4TKxtSJpee/view
+
 * Instructions:
   - Download the code provided
   - Run the Python code on Visual Studio Code (app.py)
