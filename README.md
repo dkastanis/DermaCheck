@@ -5,7 +5,8 @@ This is the code for the DermaCheck project part of the JKU Master Course: Engin
   - Dimitrios Kastanis, k01135457 (Master AI) & Bairam Kuliev k12438981(Master Computer Science)
 
 * DermaCheck's Trello Kanban Board:
-  - https://trello.com/b/yESjt8E1/ai-intensive-systems
+  - Invitation Link: https://trello.com/invite/b/67c99aed3a8c2fdddbc1ee01/ATTI4832a7694fefc38373f0aeb3cf8c68ec18601146/ai-intensive-systems
+  - Board: https://trello.com/b/yESjt8E1/ai-intensive-systems
 
 * DermaCheck's Google Drive:
   - https://drive.google.com/drive/u/0/folders/1PN-3vUuwfj5GnrrVzFxT6J14B0MQ8uT7?ths=true
@@ -37,3 +38,8 @@ This is the code for the DermaCheck project part of the JKU Master Course: Engin
 	
 * Google API Key Usage:
   - The API key is private and should not be shared publicly. It will be valid until July 31st, 2025.
+	- 
+* Support:
+  - If you have any questions or need assistance, please contact us at:
+	- Dimitrios Kastanis: dimitrios.kastanis@gmx.at
+	- Bairam Kuliev: kuliev.bairam@gmail.com
