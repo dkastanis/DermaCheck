@@ -38,7 +38,7 @@ This is the code for the DermaCheck project part of the JKU Master Course: Engin
 	
 * Google API Key Usage:
   - The API key is private and should not be shared publicly. It will be valid until July 31st, 2025.
-	- 
+	
 * Support:
   - If you have any questions or need assistance, please contact us at:
 	- Dimitrios Kastanis: dimitrios.kastanis@gmx.at
