@@ -23,3 +23,12 @@ This is the code for the DermaCheck project part of the JKU Master Course: Engin
 * Data Privacy Notice: The images you upload are processed locally on your machine and deleted after 10 minutes.
   
 * Data Ethics Notice: Image processing occurs locally to minimize privacy risks and adheres to ethical standards in data handling
+
+* Google API Disclaimer:
+  - The Google API is used to find dermatologists in your area.
+  - The API is called when you click on the "Find Dermatologists" button.
+  - The API returns a list of dermatologists based on your location.
+  - The results are displayed in the right sidebar of the app.
+	
+* Google API Key Usage:
+  - The API key is private and should not be shared publicly. It will be valid until July 31st, 2025.
