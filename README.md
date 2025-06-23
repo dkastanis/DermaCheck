@@ -20,5 +20,6 @@ This is the code for the DermaCheck project part of the JKU Master Course: Engin
   - In case of positive results, you can use the finder of nearby dermatologists provided in the right sidebar, and please keep in mind contacting any preferred dermatologist in your area.
   - Check details of skin lesions in the left sidebar to get informed about the different types.
 	
-  - Data Privacy Notice: The images you upload are processed locally on your machine and deleted after 10 minutes.
-  - Data Ethics Notice: Image processing occurs locally to minimize privacy risks and adheres to ethical standards in data handling
+* Data Privacy Notice: The images you upload are processed locally on your machine and deleted after 10 minutes.
+  
+* Data Ethics Notice: Image processing occurs locally to minimize privacy risks and adheres to ethical standards in data handling
